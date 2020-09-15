@@ -7,7 +7,11 @@ app.get('/sms/:number/:text', (req, res) => {
     const numberToSend = req.params.number.replace(/[^0-9]/g, '')
     const textToSend = req.params.text
 
-    const command = spawn(`termux-sms-send -n 015${numberToSend} "${textToSend}"`)
+    const command = spawn(`termux-sms-send`, [
+        "-n",
+        `015${numberToSend}`,
+        `"${textToSend}"`
+    ])
 
     command.stdout.on("data", data => {
         console.log(`stdout: ${data}`);
